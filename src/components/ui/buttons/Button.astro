@@ -1,0 +1,39 @@
+---
+// src/components/ui/buttons/Button.astro
+import { cn } from "../../../lib/utils";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "outline" | "ghost" | "dark";
+  class?: string;
+}
+
+const { href, variant = "primary", class: className } = Astro.props;
+
+// Sentralisasi base style (Mobile First Sizing & Interaksi Fisik)
+const baseStyles =
+  "inline-flex items-center justify-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 font-label text-sm md:text-base font-bold uppercase tracking-widest transition-all duration-300 active:scale-95 shrink-0";
+
+// Dictionary untuk Varian Tombol
+const variants = {
+  // Tombol utama (Hijau Neon)
+  primary:
+    "bg-primary text-[#00652e] shadow-glow hover:bg-primary-container hover:-translate-y-1 hover:shadow-[0_0_60px_rgba(0,253,126,0.5)]",
+
+  // Tombol garis pinggir (Cocok untuk card gelap)
+  outline:
+    "border-2 border-surface-highest bg-transparent text-on-surface hover:border-primary hover:text-primary hover:bg-primary/5",
+
+  // Tombol tanpa background
+  ghost: "bg-transparent text-on-surface-variant hover:text-primary hover:bg-surface-container",
+
+  // Tombol gelap (Cocok untuk ditaruh di atas background kartu yang sudah terang/Highlight)
+  dark: "bg-[#004d22] text-[#A6FFB6] hover:bg-[#003316] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(0,77,34,0.4)]",
+};
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag href={href} class={cn(baseStyles, variants[variant], className)}>
+  <slot />
+</Tag>

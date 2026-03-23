@@ -1,0 +1,86 @@
+---
+import { cn } from "../../lib/utils";
+import Button from "../ui/buttons/Button.astro"; // <-- Panggil komponen Button kita
+
+interface Props {
+  title: string;
+  price: string;
+  features: string[];
+  isHighlight?: boolean;
+  icon?: any;
+  buttonText?: string;
+  buttonHref?: string;
+}
+
+const {
+  title,
+  price,
+  features,
+  isHighlight = false,
+  icon: Icon,
+  buttonText = "SELECT TICKET",
+  buttonHref = "#",
+} = Astro.props;
+
+// ==========================================
+// CLEAN CODE: Style Dictionary untuk Tema Tiket
+// ==========================================
+const styles = {
+  // Wrapper: Tiket Highlight dibikin agak 'maju' (scale-105) di desktop
+  wrapper: isHighlight
+    ? "bg-primary shadow-[0_0_40px_rgba(0,253,126,0.3)] hover:shadow-[0_0_60px_rgba(0,253,126,0.5)] md:scale-105 z-10"
+    : "bg-surface-container border border-surface-container/50 hover:bg-surface-high hover:border-primary/50 hover:shadow-glow",
+
+  header: isHighlight ? "text-[#004d22]" : "text-on-surface-variant",
+  currency: isHighlight ? "text-[#004d22]" : "text-primary text-glow",
+  price: isHighlight ? "text-[#004d22]" : "text-on-surface text-glow",
+  bullet: isHighlight ? "bg-[#004d22]" : "bg-primary",
+  featureText: isHighlight ? "font-medium text-[#004d22]/90" : "text-on-surface-variant",
+};
+---
+
+<div
+  class={cn(
+    // Base Layout: Pakai h-full agar kalau dijejer 3, tingginya sama semua
+    "relative flex flex-col h-full rounded-none p-6 sm:p-8 lg:p-10 transition-all duration-500",
+    styles.wrapper
+  )}
+>
+  <div class="mb-8 flex items-start justify-between md:mb-10">
+    <span class={cn("font-display text-xs font-bold uppercase tracking-[0.2em]", styles.header)}>
+      {title}
+    </span>
+    {Icon && <Icon class={cn("h-6 w-6 shrink-0", styles.header)} strokeWidth={2} />}
+  </div>
+
+  <div class="mb-10 flex items-baseline gap-2 md:mb-12">
+    <span class={cn("font-display text-xl font-bold md:text-2xl", styles.currency)}> IDR </span>
+    <span
+      class={cn(
+        "font-display text-5xl font-bold tracking-tighter sm:text-6xl lg:text-7xl",
+        styles.price
+      )}
+    >
+      {price}
+    </span>
+  </div>
+
+  <ul class="mb-auto flex flex-col gap-4 pb-12">
+    {
+      features.map((feature: string) => (
+        <li class="flex items-start gap-4">
+          <div class={cn("mt-1.5 h-1.5 w-1.5 shrink-0 rounded-none", styles.bullet)} />
+          <span class={cn("font-body text-sm leading-relaxed md:text-base", styles.featureText)}>
+            {feature}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-8 border-t border-black/10 pt-6">
+    <Button href={buttonHref} variant={isHighlight ? "dark" : "outline"} class="w-full">
+      {buttonText}
+    </Button>
+  </div>
+</div>

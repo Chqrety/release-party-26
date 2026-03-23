@@ -1,0 +1,63 @@
+---
+import TeaLinuxLogo from "../ui/TeaLinuxLogo.astro";
+import { aboutTexts } from "../../data/content";
+---
+
+<section id="about" class="relative overflow-hidden bg-black py-24 md:py-32 lg:py-40">
+  <div
+    class="absolute inset-0 z-0 bg-[url('/assets/branding/hex-pattern.svg')] bg-center bg-repeat opacity-[0.03]"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-6">
+    <div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2 md:gap-12 lg:gap-24">
+      <div class="relative flex flex-col items-start gap-8 md:gap-12">
+        <p
+          class="font-display text-on-surface-variant text-xs font-bold tracking-[0.2em] uppercase opacity-60 md:text-sm"
+        >
+          RELEASE PARTY 26
+        </p>
+
+        <div class="relative">
+          <div
+            class="absolute -top-8 -left-4 -z-10 w-24 -rotate-12 opacity-20 transition-transform duration-700 hover:rotate-0 md:-top-16 md:-left-8 md:w-32 lg:w-40"
+          >
+            <TeaLinuxLogo class="text-primary h-full w-full" />
+          </div>
+
+          <h2
+            class="font-display text-on-surface text-5xl leading-[1.1] font-bold tracking-tighter md:text-6xl lg:text-7xl"
+          >
+            NIKMATNYA<br />
+            SEBUAH<br />
+            <span class="text-primary text-glow italic">RACIKAN</span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="flex w-full flex-col gap-8 md:mt-16 lg:gap-10">
+        <p
+          class="font-body text-on-surface-variant text-base leading-relaxed md:text-lg md:leading-loose"
+        >
+          {aboutTexts.firstParagraph}
+        </p>
+
+        <p
+          class="font-body text-on-surface-variant text-base leading-relaxed md:text-lg md:leading-loose"
+        >
+          {aboutTexts.secondParagraph}
+        </p>
+
+        <div
+          class="border-primary bg-surface-container/30 hover:bg-surface-container/50 border-l-2 py-4 pl-6 shadow-[-4px_0_15px_rgba(0,253,126,0.15)] transition-colors"
+        >
+          <p
+            class="font-label text-on-surface text-sm font-medium tracking-widest uppercase md:text-base"
+          >
+            {aboutTexts.creditParagraph}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

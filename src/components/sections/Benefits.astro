@@ -1,0 +1,55 @@
+---
+import { BrainCircuit, Globe, Ticket, Package } from "lucide-react";
+import BenefitCard from "../ui/cards/BenefitCard.astro"; // Import komponen card yang baru
+
+// Data untuk Bento Grid (Bisa dipindah ke file content.ts terpisah nanti)
+const benefitsData = [
+  {
+    title: "WAWASAN DARI AHLI",
+    description:
+      "Dapatkan perspektif eksklusif dari para pakar industri yang telah berkontribusi besar dalam ekosistem teknologi global.",
+    icon: BrainCircuit,
+    colSpan: "md:col-span-2",
+    isHighlight: false,
+  },
+  {
+    title: "JEJARING GLOBAL",
+    description:
+      "Terhubung dengan ribuan pengembang, desainer, dan inovator dari berbagai belahan dunia dalam satu platform.",
+    icon: Globe,
+    colSpan: "md:col-span-1",
+    isHighlight: true,
+  },
+  {
+    title: "SEMINAR EKSKLUSIF",
+    description:
+      "Akses sesi mendalam mengenai pengembangan sistem operasi dan teknologi masa depan yang belum pernah dipublikasikan.",
+    icon: Ticket,
+    colSpan: "md:col-span-1",
+    isHighlight: false,
+  },
+  {
+    title: "SEMINAR KIT & MAKANAN",
+    description:
+      "Nikmati fasilitas lengkap mulai dari Exclusive Merchandise, Seminar Kit fisik, hingga konsumsi premium selama acara berlangsung.",
+    icon: Package,
+    colSpan: "md:col-span-2",
+    isHighlight: false,
+  },
+];
+---
+
+<section id="benefit" class="bg-surface-lowest py-32">
+  <div class="mb-20 text-center">
+    <h2
+      class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+    >
+      Kenapa Harus <span class="text-primary text-shadow-glow italic">Ikut</span>
+    </h2>
+  </div>
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {benefitsData.map((benefit) => <BenefitCard {...benefit} />)}
+    </div>
+  </div>
+</section>

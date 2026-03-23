@@ -1,0 +1,58 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+  time: string;
+  title: string;
+  description: string;
+  index: number;
+}
+
+const { time, title, description, index } = Astro.props;
+
+// Logic Penentu Sisi: Genap = Kiri, Ganjil = Kanan (Di Desktop)
+const isLeft = index % 2 === 0;
+---
+
+<div class="group relative mb-12 flex w-full cursor-pointer flex-col md:mb-20">
+  <div
+    class={cn(
+      "absolute top-1 z-10 h-4 w-4 transition-all duration-500 rounded-none",
+      "bg-surface-highest group-hover:bg-primary group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(0,253,126,0.6)]",
+      // MATEMATIKA POSISI YANG BENAR:
+      // Karena garis di left-6, titik juga di left-6 lalu ditarik mundur setengah lebarnya (-translate-x-1/2)
+      "left-6 -translate-x-1/2 md:left-1/2"
+    )}
+  >
+  </div>
+
+  <div
+    class={cn(
+      // Base Style: Tumpuk vertikal, lebar penuh (HP), padding kiri disesuaikan dengan posisi garis
+      "flex flex-col w-full pl-16 sm:pl-20 md:w-1/2",
+
+      // LOGIC LAYOUT DESKTOP
+      isLeft
+        ? "md:items-end md:pl-0 md:pr-16 md:text-right" // Jika Genap (Kiri): Rata kanan, hapus padding kiri, tambah padding kanan
+        : "items-start md:ml-auto md:text-left" // Jika Ganjil (Kanan): Teks rata kiri, dorong ke sisi kanan layat
+    )}
+  >
+    <p
+      class="font-display text-on-surface-variant group-hover:text-primary mb-2 text-xs font-bold tracking-widest transition-colors duration-500 md:text-sm"
+    >
+      {time}
+    </p>
+
+    <h3
+      class="font-display text-on-surface mb-3 text-xl font-bold uppercase transition-colors duration-500 md:text-2xl lg:text-3xl"
+    >
+      <span class="group-hover:text-on-surface transition-colors duration-300">{title}</span>
+    </h3>
+
+    <p
+      class="font-body text-on-surface-variant group-hover:text-on-surface-variant/80 text-sm leading-relaxed transition-colors duration-500 md:max-w-md md:text-base"
+    >
+      {description}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+---
+import { legacyImagesData } from "../../data/content";
+import LegacyImageCard from "../ui/LegacyImageCard.astro";
+
+// Gandakan array 3x untuk menciptakan ilusi infinite scroll tanpa batas (aman di monitor Ultrawide)
+const duplicatedLegacy = [...legacyImagesData, ...legacyImagesData, ...legacyImagesData];
+---
+
+<section id="legacy" class="relative overflow-hidden bg-black py-24 md:py-32 lg:py-40">
+  <div
+    class="absolute inset-0 z-0 bg-[url('/assets/branding/hex-pattern.svg')] bg-center bg-repeat opacity-[0.03]"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-screen-2xl">
+    <div class="mb-16 px-6 text-center md:mb-20">
+      <h2
+        class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+      >
+        OUR <span class="text-primary text-glow italic">LEGACY</span>
+      </h2>
+    </div>
+
+    <div
+      class="flex w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)]"
+    >
+      <div
+        class="animate-marquee-left pause-on-hover flex w-max items-center gap-6 px-8 md:gap-12 lg:gap-16"
+        style="animation-duration: 60s;"
+      >
+        {
+          duplicatedLegacy.map((image) => (
+            // shrink-0 sangat penting di sini agar foto tidak gepeng tergencet flexbox
+            <div class="w-60 shrink-0 sm:w-75 md:w-95">
+              <LegacyImageCard {...image} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

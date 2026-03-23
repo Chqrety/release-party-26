@@ -1,0 +1,31 @@
+---
+import AgendaItem from "../ui/AgendaItem.astro";
+import { agendaData } from "../../data/content";
+---
+
+<section id="agenda" class="relative overflow-hidden bg-black py-24 md:py-32 lg:py-40">
+  <div
+    class="absolute inset-0 z-0 bg-[url('/assets/branding/hex-pattern.svg')] bg-center bg-repeat opacity-[0.03]"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-6">
+    <div class="mb-16 text-center md:mb-24">
+      <h2
+        class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+      >
+        DIRACIK <br />
+        <span class="text-primary text-glow italic">Untukmu</span>
+      </h2>
+    </div>
+
+    <div class="relative mx-auto max-w-5xl">
+      <div
+        class="bg-surface-container absolute top-0 bottom-0 left-6 w-0.5 md:left-1/2 md:-translate-x-1/2"
+      >
+      </div>
+
+      {agendaData.map((item, index) => <AgendaItem {...item} index={index} />)}
+    </div>
+  </div>
+</section>

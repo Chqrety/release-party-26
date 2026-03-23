@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import { cn } from "../../lib/utils";
+import { mediaPartnersData, sponsorsData } from "../../data/content";
+
+// Kita gandakan array-nya untuk menciptakan ilusi infinite scroll yang mulus
+const duplicatedSponsors = [...sponsorsData, ...sponsorsData];
+const duplicatedMedia = [...mediaPartnersData, ...mediaPartnersData];
+---
+
+<section id="sponsors" class="bg-surface-lowest overflow-hidden py-32">
+  <div class="mx-auto max-w-screen-2xl">
+    <div class="mb-20 px-6 text-center">
+      <h2
+        class="font-display text-on-surface mb-16 text-center text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+      >
+        OUR <span class="text-primary text-shadow-glow italic">Partners</span>
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-20">
+      <div class="relative flex flex-col items-center">
+        <h3 class="font-display text-primary mb-10 text-xs font-bold tracking-[0.4em] uppercase">
+          SPONSOR
+        </h3>
+
+        <div
+          class="flex w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)]"
+        >
+          <div
+            class="animate-marquee-right pause-on-hover flex w-max items-center gap-16 px-8 md:gap-24"
+          >
+            {
+              duplicatedSponsors.map((sponsor) => (
+                <div class="sponsor-item /* Base Mobile (Auto-Color via JS) */ /* Desktop (Hover logic tetap ada) */ flex items-center justify-center opacity-60 grayscale transition-all duration-300 data-[in-view=true]:scale-110 data-[in-view=true]:opacity-100 data-[in-view=true]:grayscale-0 md:opacity-60 md:grayscale md:hover:scale-110 md:hover:opacity-100 md:hover:grayscale-0 md:data-[in-view=true]:scale-100 md:data-[in-view=true]:opacity-60 md:data-[in-view=true]:grayscale">
+                  <Image
+                    src={sponsor.src}
+                    alt={sponsor.name}
+                    width={300}
+                    height={400}
+                    class="h-10 w-auto max-w-37.5 object-contain md:h-14 md:max-w-50"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex flex-col items-center">
+        <h3 class="font-display text-primary mb-10 text-xs font-bold tracking-[0.4em] uppercase">
+          MEDIA PARTNER
+        </h3>
+
+        <div
+          class="flex w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)]"
+        >
+          <div
+            class="animate-marquee-left pause-on-hover flex w-max items-center gap-16 px-8 md:gap-24"
+          >
+            {
+              duplicatedMedia.map((media) => (
+                <div class="media-item flex items-center justify-center opacity-50 grayscale transition-all duration-300 data-[in-view=true]:scale-110 data-[in-view=true]:opacity-100 data-[in-view=true]:grayscale-0 md:opacity-50 md:grayscale md:hover:scale-110 md:hover:opacity-100 md:hover:grayscale-0 md:data-[in-view=true]:scale-100 md:data-[in-view=true]:opacity-50 md:data-[in-view=true]:grayscale">
+                  <Image
+                    src={media.src}
+                    alt={media.name}
+                    width={300}
+                    height={400}
+                    class="h-10 w-auto max-w-37.5 object-contain md:h-14 md:max-w-50"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const observerOptions = {
+    threshold: 0.5,
+    rootMargin: "0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      // Kita hanya aktifkan data-in-view jika lebar layar di bawah desktop (768px)
+      if (window.innerWidth < 768) {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute("data-in-view", "true");
+        } else {
+          entry.target.setAttribute("data-in-view", "false");
+        }
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".sponsor-item, .media-item").forEach((el) => {
+    observer.observe(el);
+  });
+</script>

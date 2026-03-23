@@ -1,0 +1,105 @@
+---
+import TeaLinuxLogo from "../ui/TeaLinuxLogo.astro"; // Import sesuai request
+import { cn } from "../../lib/utils";
+import { faqData } from "../../data/content";
+---
+
+<section id="faq" class="bg-surface-lowest relative overflow-hidden py-32">
+  <div
+    class="absolute inset-0 z-0 flex scale-150 rotate-[-15deg] items-center justify-center opacity-[0.03]"
+  >
+    <div class="h-[80vw] w-[80vw]">
+      <TeaLinuxLogo />
+    </div>
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-5xl px-6">
+    <div class="mb-20 text-center">
+      <h2
+        class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+      >
+        FREQUENTLY ASKED <span class="text-primary text-glow italic">QUESTIONS</span>
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      {
+        faqData.map((item, index) => (
+          // Wrapper per item dengan class 'faq-item' untuk trigger JS
+          <div class="faq-item group border-surface-container bg-surface-container hover:border-primary/50 hover:shadow-glow hover:bg-surface-high border transition-all duration-300">
+            <button
+              class="faq-trigger flex w-full items-center justify-between p-6 text-left"
+              aria-expanded="false"
+              aria-controls={`faq-answer-${index}`}
+            >
+              <h3 class="font-display text-on-surface group-hover:text-primary text-xl font-bold uppercase transition-colors md:text-2xl">
+                {item.question}
+              </h3>
+
+              <span class="faq-icon text-primary transition-transform duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-plus"
+                >
+                  <>
+                    <path d="M12 5v14" />
+                    <path d="M5 12h14" />
+                  </>
+                </svg>
+              </span>
+            </button>
+
+            <div
+              id={`faq-answer-${index}`}
+              class="faq-content max-h-0 overflow-hidden px-6 transition-all duration-500 ease-in-out"
+              role="region"
+            >
+              <p class="font-body text-on-surface-variant max-w-3xl pb-8 text-base leading-relaxed">
+                {item.answer}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const trigger = item.querySelector(".faq-trigger");
+      const content = item.querySelector(".faq-content") as HTMLElement;
+      const icon = item.querySelector(".faq-icon") as HTMLElement;
+
+      trigger?.addEventListener("click", () => {
+        // Cek status ekspansi saat ini
+        const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+
+        // Toggle status ekspansi
+        trigger.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+
+        if (!isExpanded) {
+          // Buka: Hitung scrollHeight asli untuk transisi smooth
+          content.style.maxHeight = content.scrollHeight + "px";
+          // Ubah icon Plus jadi Minus (dengan rotasi kaku 45 derajat)
+          icon.style.transform = "rotate(45deg)";
+        } else {
+          // Tutup: Kembalikan max-height ke 0
+          content.style.maxHeight = "0px";
+          icon.style.transform = "rotate(0deg)";
+        }
+      });
+    });
+  });
+</script>

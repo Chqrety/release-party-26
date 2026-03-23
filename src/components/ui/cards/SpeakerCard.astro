@@ -1,0 +1,92 @@
+---
+import { cn } from "../../../lib/utils";
+import BaseCard from "./BaseCard.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  imagePosition?: "left" | "right";
+}
+
+const { name, role, description, image, imagePosition = "left" } = Astro.props;
+const isLeft = imagePosition === "left";
+---
+
+<BaseCard
+  class={cn(
+    "speaker-card flex w-full max-w-5xl mx-auto flex-col transition-all duration-700",
+    "border-transparent", // Default tanpa border
+
+    // BORDER HANYA DI DESKTOP (md:)
+    isLeft
+      ? "md:flex-row md:border-l-4 md:hover:border-primary"
+      : "md:flex-row-reverse md:border-l-0 md:border-r-4 md:hover:border-primary",
+
+    // Class trigger dari JS nanti:
+    "data-[in-view=true]:shadow-glow data-[in-view=true]:bg-surface-high"
+  )}
+>
+  <div class="relative aspect-square w-full shrink-0 overflow-hidden md:w-5/12 md:max-w-100">
+    <Image
+      src={image}
+      alt={name}
+      width={300}
+      height={400}
+      format="webp"
+      class={cn(
+        "absolute inset-0 h-full w-full object-cover object-center grayscale transition-all duration-700 ease-out",
+        "group-hover:scale-105 group-hover:grayscale-0",
+        "group-data-[in-view=true]:grayscale-0 group-data-[in-view=true]:scale-105"
+      )}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
+  <div
+    class={cn(
+      "flex w-full flex-col justify-center p-6 sm:p-8 lg:p-12",
+      isLeft ? "items-start text-left" : "items-start text-left md:items-end md:text-right"
+    )}
+  >
+    <span class="font-display text-primary text-xs font-bold tracking-[0.2em] uppercase md:text-sm">
+      {role}
+    </span>
+    <h3
+      class="font-display text-on-surface mt-2 text-2xl font-bold uppercase sm:text-3xl md:text-4xl"
+    >
+      {name}
+    </h3>
+    <p
+      class="font-body text-on-surface-variant mt-4 max-w-lg text-sm leading-relaxed sm:text-base md:leading-loose"
+    >
+      {description}
+    </p>
+  </div>
+</BaseCard>
+
+<script>
+  // SCRIPT OBSERVER: Menembak class saat kartu masuk viewport
+  const observerOptions = {
+    threshold: 0.6, // Card harus 60% terlihat baru nyala warnanya
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.setAttribute("data-in-view", "true");
+      } else {
+        // Optional: kembalikan ke grayscale kalau sudah lewat/scroll menjauh
+        entry.target.setAttribute("data-in-view", "false");
+      }
+    });
+  }, observerOptions);
+
+  // Jalankan observer ke semua kartu speaker
+  document.querySelectorAll(".speaker-card").forEach((card) => {
+    observer.observe(card);
+  });
+</script>

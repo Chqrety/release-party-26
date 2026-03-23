@@ -1,0 +1,60 @@
+---
+import TicketCard from "../ui/TicketCard.astro";
+import { Zap, Ticket, Users } from "lucide-react"; // Ikon untuk representasi tiket
+
+// Data Pricing (Harga dan fitur bisa disesuaikan nanti)
+const ticketsData = [
+  {
+    title: "EARLY BIRD",
+    price: "50K",
+    features: [
+      "Full Seminar Access",
+      "Digital Certificate",
+      "Standard Seminar Kit",
+      "Coffee Break",
+    ],
+    isHighlight: false, // Gelap
+    icon: Zap,
+  },
+  {
+    title: "NORMAL TICKET",
+    price: "75K",
+    features: [
+      "Everything in Early Bird",
+      "Exclusive Doscom Sticker",
+      "Front Row Seating",
+      "Lunch Included",
+    ],
+    isHighlight: true, // Hijau Neon (Focal Point)
+    icon: Ticket,
+  },
+  {
+    title: "BUNDLING (3 ORG)",
+    price: "180K",
+    features: [
+      "3x Full Seminar Access",
+      "3x Digital Certificate",
+      "3x Premium Seminar Kit",
+      "Save 45K IDR Total",
+    ],
+    isHighlight: false, // Gelap
+    icon: Users,
+  },
+];
+---
+
+<section id="tickets" class="bg-surface-lowest relative overflow-hidden py-32">
+  <div class="relative z-10 mx-auto max-w-7xl px-6">
+    <div class="mb-20 text-center">
+      <h2
+        class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+      >
+        SECURE YOUR <span class="text-primary text-shadow-glow italic">SPOT</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:items-center lg:gap-8">
+      {ticketsData.map((ticket) => <TicketCard {...ticket} />)}
+    </div>
+  </div>
+</section>

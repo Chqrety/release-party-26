@@ -1,0 +1,103 @@
+---
+import Logo from "../ui/Logo.astro";
+---
+
+<header
+  class="bg-surface-lowest border-surface-container/50 fixed top-0 left-0 z-50 w-full border-b"
+>
+  <div class="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-4">
+    <a href="/" class="group flex items-center gap-3">
+      <Logo
+        class="text-primary h-8 w-8 transition-all group-hover:drop-shadow-[0_0_10px_rgba(0,253,126,0.6)]"
+      />
+      <span class="font-display text-on-surface text-xl font-bold tracking-wide">
+        RELEASE PARTY 26
+      </span>
+    </a>
+
+    <nav
+      class="font-label relative hidden items-center gap-10 text-sm tracking-widest uppercase md:flex"
+    >
+      <span
+        id="nav-indicator"
+        class="bg-primary absolute bottom-0 left-0 h-0.5 w-0 transition-all duration-300"></span>
+
+      <a href="#about" data-nav class="nav-link py-1">TENTANG</a>
+      <a href="#speakers" data-nav class="nav-link py-1">PEMBICARA</a>
+      <a href="#agenda" data-nav class="nav-link py-1">AGENDA</a>
+      <a href="#tickets" data-nav class="nav-link py-1">TIKET</a>
+    </nav>
+
+    <a
+      href="/daftar"
+      class="bg-primary font-label hover:bg-primary-container shadow-glow hidden px-8 py-3 text-sm font-bold tracking-wider text-[#00652e] uppercase transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,253,126,0.3)] md:flex"
+    >
+      DAFTAR SEKARANG
+    </a>
+  </div>
+</header>
+
+<script>
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>("[data-nav]");
+  const indicator = document.getElementById("nav-indicator");
+
+  function setActive(link: HTMLAnchorElement) {
+    if (!link || !indicator) return;
+
+    navLinks.forEach((l) => {
+      l.classList.remove("text-primary", "font-semibold");
+    });
+
+    link.classList.add("text-primary", "font-semibold");
+
+    // pakai getBoundingClientRect biar lebih akurat
+    const linkRect = link.getBoundingClientRect();
+    const parentRect = link.parentElement!.getBoundingClientRect();
+
+    indicator.style.left = linkRect.left - parentRect.left + "px";
+    indicator.style.width = linkRect.width + "px";
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      let visibleSection: HTMLElement | null = null;
+      let maxRatio = 0;
+
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          visibleSection = entry.target as HTMLElement;
+        }
+      });
+
+      if (visibleSection !== null) {
+        const id = (visibleSection as HTMLElement).id;
+
+        navLinks.forEach((link) => {
+          if (link.getAttribute("href") === `#${id}`) {
+            setActive(link);
+          }
+        });
+      }
+    },
+    {
+      threshold: [0.2, 0.4, 0.6, 0.8],
+      rootMargin: "-80px 0px -40% 0px",
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+
+  // ⬇️ ini penting banget
+  window.addEventListener("load", () => {
+    const first = navLinks[0];
+    if (first) setActive(first);
+  });
+
+  // ⬇️ handle resize (biar gak geser aneh)
+  window.addEventListener("resize", () => {
+    const active = document.querySelector(".text-primary") as HTMLAnchorElement | null;
+    if (active) setActive(active);
+  });
+</script>

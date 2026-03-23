@@ -1,0 +1,47 @@
+---
+import CircuitBeams from "../ui/CircuitBeams.astro";
+import BrutalistButton from "../ui/BrutalistButton.astro";
+import ScrollIndicator from "../ui/ScrollIndicator.astro";
+---
+
+<section
+  id="hero"
+  class="bg-surface-lowest relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center"
+>
+  <div
+    class="absolute inset-0 z-0 bg-[url('/assets/branding/hex-pattern.svg')] bg-center bg-repeat opacity-[0.05]"
+  >
+  </div>
+
+  <CircuitBeams />
+
+  <div class="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-6">
+    <h1
+      class="font-display text-on-surface text-6xl leading-none font-bold tracking-tighter md:text-[8rem]"
+    >
+      RELEASE
+      <span
+        class="text-primary from-surface-high to-surface-lowest text-shadow-glow bg-linear-to-b bg-clip-text italic"
+        >PARTY</span
+      > 26
+    </h1>
+
+    <p class="font-body text-on-surface-variant mt-4 text-xl tracking-wide uppercase md:text-2xl">
+      INOVASI TERBUKA UNTUK <span class="text-primary font-bold">MASA DEPAN</span>
+    </p>
+
+    <BrutalistButton href="#" class="mt-8">
+      DAFTAR SEKARANG
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg
+      >
+    </BrutalistButton>
+  </div>
+
+  <ScrollIndicator />
+</section>

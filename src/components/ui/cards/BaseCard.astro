@@ -1,0 +1,27 @@
+---
+import { cn } from "../../../lib/utils";
+
+interface Props {
+  class?: string;
+  isHighlight?: boolean; // Berguna untuk card yang di-highlight (misal: Tiket Bundling)
+}
+
+const { class: className, isHighlight = false } = Astro.props;
+---
+
+<div
+  class={cn(
+    // Base Brutalist styling (Murni wadah, TANPA border bawaan)
+    "group relative overflow-hidden transition-all duration-500",
+
+    // Logic untuk Highlight vs Normal Card (Hanya urusan warna & shadow)
+    isHighlight
+      ? "bg-surface-high shadow-[0_0_40px_rgba(0,253,126,0.2)]"
+      : "bg-surface-container hover:bg-surface-high hover:shadow-glow",
+
+    // className dari luar untuk mengatur Layout (termasuk border spesifik kalau ada)
+    className
+  )}
+>
+  <slot />
+</div>

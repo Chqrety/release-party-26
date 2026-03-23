@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+interface Props {
+  src: string;
+  alt: string;
+}
+const { src, alt } = Astro.props;
+---
+
+<div
+  class="legacy-card group relative aspect-4/5 w-62.5 shrink-0 overflow-hidden sm:w-75 md:w-87.5"
+>
+  <Image
+    src={src}
+    alt={alt}
+    width={300}
+    height={400}
+    format="webp"
+    class="h-full w-full object-cover object-center transition duration-500 ease-out md:grayscale md:group-hover:grayscale-0"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div
+    class="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 md:group-hover:opacity-100"
+  >
+  </div>
+</div>
