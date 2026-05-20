@@ -1,38 +1,39 @@
 ---
-import { BrainCircuit, Globe, Ticket, Package } from "lucide-react";
-import BenefitCard from "../ui/cards/BenefitCard.astro"; // Import komponen card yang baru
+import { BrainCircuit, Cpu, Code2, Gift } from "lucide-react";
+import BenefitCard from "../ui/cards/BenefitCard.astro";
 
-// Data untuk Bento Grid (Bisa dipindah ke file content.ts terpisah nanti)
 const benefitsData = [
   {
-    title: "WAWASAN DARI AHLI",
+    title: "UPSTREAM AI SEMINAR",
     description:
-      "Dapatkan perspektif eksklusif dari para pakar industri yang telah berkontribusi besar dalam ekosistem teknologi global.",
+      "Pelajari implementasi mendalam NLP dan LLM langsung dari praktisi industri. Kita akan mengupas tuntas optimasi sistem cerdas melampaui sekadar wrapping API biasa.",
     icon: BrainCircuit,
     colSpan: "md:col-span-2",
     isHighlight: false,
   },
   {
-    title: "JEJARING GLOBAL",
+    title: "TEALINUXOS NEW RELEASE",
     description:
-      "Terhubung dengan ribuan pengembang, desainer, dan inovator dari berbagai belahan dunia dalam satu platform.",
-    icon: Globe,
+      "Jadi yang pertama mencoba distribusi Linux racikan DOSCOM versi terbaru yang kini dilengkapi dengan integrasi AI add-ons siap pakai.",
+    icon: Cpu,
     colSpan: "md:col-span-1",
-    isHighlight: true,
+    isHighlight: true, // HIGHLIGHT UTAMA UNTUK ACARA RELEASE PARTY
+    buttonText: "Daftar Sekarang",
+    buttonHref: "https://d-form.doscom.org",
   },
   {
-    title: "SEMINAR EKSKLUSIF",
+    title: "EXPO PROJECT SHOWCASE",
     description:
-      "Akses sesi mendalam mengenai pengembangan sistem operasi dan teknologi masa depan yang belum pernah dipublikasikan.",
-    icon: Ticket,
+      "Eksplorasi langsung proyek open source hasil kembangan satu periode internal DOSCOM seperti D-Form, Sicon C2 framework, hingga web profile terbaru.",
+    icon: Code2,
     colSpan: "md:col-span-1",
     isHighlight: false,
   },
   {
-    title: "SEMINAR KIT & MAKANAN",
+    title: "EXCLUSIVE KIT & MERCHANDISE",
     description:
-      "Nikmati fasilitas lengkap mulai dari Exclusive Merchandise, Seminar Kit fisik, hingga konsumsi premium selama acara berlangsung.",
-    icon: Package,
+      "Bawa pulang bundle merchandise eksklusif TeaLinuxOS, sertifikat penghargaan resmi berskala regional, serta konsumsi premium selama acara berlangsung.",
+    icon: Gift,
     colSpan: "md:col-span-2",
     isHighlight: false,
   },

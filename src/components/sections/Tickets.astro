@@ -2,43 +2,45 @@
 import TicketCard from "../ui/TicketCard.astro";
 import { Zap, Ticket, Users } from "lucide-react"; // Ikon untuk representasi tiket
 
-// Data Pricing (Harga dan fitur bisa disesuaikan nanti)
-const ticketsData = [
+export const ticketsData = [
   {
-    title: "EARLY BIRD",
-    price: "50K",
+    title: "Tiket Single UDINUS",
+    price: "35K",
     features: [
-      "Full Seminar Access",
-      "Digital Certificate",
-      "Standard Seminar Kit",
-      "Coffee Break",
+      "Akses Penuh Seminar & Expo Project",
+      "Sertifikat Digital & Standard Kit",
+      "Stiker Eksklusif TeaLinuxOS",
+      "Khusus Mahasiswa Aktif UDINUS",
+      "Slot Kursi Prioritas",
     ],
-    isHighlight: false, // Gelap
-    icon: Zap,
-  },
-  {
-    title: "NORMAL TICKET",
-    price: "75K",
-    features: [
-      "Everything in Early Bird",
-      "Exclusive Doscom Sticker",
-      "Front Row Seating",
-      "Lunch Included",
-    ],
-    isHighlight: true, // Hijau Neon (Focal Point)
+
+    isHighlight: false,
     icon: Ticket,
   },
   {
-    title: "BUNDLING (3 ORG)",
-    price: "180K",
+    title: "Tiket Bundling (3 Peserta)",
+    price: "100K",
     features: [
-      "3x Full Seminar Access",
-      "3x Digital Certificate",
-      "3x Premium Seminar Kit",
-      "Save 45K IDR Total",
+      "3x Akses Penuh Seminar & Expo",
+      "3x Sertifikat & Seminar Kit",
+      "3x Snack & Coffee Break",
+      "Hemat Rp20.000,- dari Harga Normal",
     ],
-    isHighlight: false, // Gelap
+    isHighlight: true, // Gelap / Standar
     icon: Users,
+  },
+  {
+    title: "Tiket Single Umum",
+    price: "40K",
+    features: [
+      "Akses Penuh Seminar & Expo Project",
+      "Sertifikat Digital Resmi",
+      "Standard Seminar Kit",
+      "Snack & Coffee Break",
+      "Terbuka untuk Publik / Umum",
+    ],
+    isHighlight: false, // Gelap / Standar
+    icon: Zap,
   },
 ];
 ---

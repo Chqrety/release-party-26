@@ -6,9 +6,11 @@ interface Props {
   href?: string;
   variant?: "primary" | "outline" | "ghost" | "dark";
   class?: string;
+  target?: "_blank" | "_self";
+  rel?: string;
 }
 
-const { href, variant = "primary", class: className } = Astro.props;
+const { href, variant = "primary", class: className, target = "_blank", rel } = Astro.props;
 
 // Sentralisasi base style (Mobile First Sizing & Interaksi Fisik)
 const baseStyles =
@@ -34,6 +36,11 @@ const variants = {
 const Tag = href ? "a" : "button";
 ---
 
-<Tag href={href} class={cn(baseStyles, variants[variant], className)}>
+<Tag
+  href={href}
+  target={target}
+  rel={target === "_blank" ? "noopener noreferrer" : rel}
+  class={cn(baseStyles, variants[variant], className)}
+>
   <slot />
 </Tag>

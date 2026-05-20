@@ -1,42 +1,121 @@
 ---
 import { legacyImagesData } from "../../data/content";
 import LegacyImageCard from "../ui/LegacyImageCard.astro";
-
-// Gandakan array 3x untuk menciptakan ilusi infinite scroll tanpa batas (aman di monitor Ultrawide)
-const duplicatedLegacy = [...legacyImagesData, ...legacyImagesData, ...legacyImagesData];
+import { cn } from "../../lib/utils";
 ---
 
-<section id="legacy" class="relative overflow-hidden bg-black py-24 md:py-32 lg:py-40">
-  <div
-    class="absolute inset-0 z-0 bg-[url('/assets/branding/hex-pattern.svg')] bg-center bg-repeat opacity-[0.03]"
-  >
-  </div>
-
-  <div class="relative z-10 mx-auto max-w-screen-2xl">
-    <div class="mb-16 px-6 text-center md:mb-20">
+<section id="legacy" class="relative overflow-hidden bg-black py-24 md:py-32">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="mb-16 text-center">
       <h2
-        class="font-display text-on-surface text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
+        class="font-display text-4xl font-bold tracking-tighter uppercase md:text-5xl lg:text-6xl"
       >
         OUR <span class="text-primary text-glow italic">LEGACY</span>
       </h2>
     </div>
 
     <div
-      class="flex w-full overflow-hidden mask-[linear-gradient(to_right,transparent_0,black_128px,black_calc(100%-128px),transparent_100%)]"
+      id="legacy-carousel"
+      class="no-scrollbar gpu-accelerate flex w-full snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-8"
     >
+      {
+        legacyImagesData.map((img) => (
+          <div class="shrink-0 snap-center">
+            <LegacyImageCard src={img.src} alt={img.alt} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 flex flex-col items-center justify-end gap-4 sm:flex-row">
       <div
-        class="animate-marquee-left pause-on-hover flex w-max items-center gap-6 px-8 md:gap-12 lg:gap-16"
-        style="animation-duration: 60s;"
+        class="font-display text-on-surface-variant flex items-center gap-3 text-xs font-bold tracking-widest uppercase select-none"
       >
-        {
-          duplicatedLegacy.map((image) => (
-            // shrink-0 sangat penting di sini agar foto tidak gepeng tergencet flexbox
-            <div class="w-60 shrink-0 sm:w-75 md:w-95">
-              <LegacyImageCard {...image} />
-            </div>
-          ))
-        }
+        <span>SWIPE TO EXPLORE</span>
+
+        <div
+          class="bg-surface-container border-surface-highest flex h-9 w-20 items-center justify-between border px-3"
+        >
+          <button
+            id="prev-legacy"
+            class="text-on-surface hover:text-primary cursor-pointer text-sm font-bold transition-colors duration-300"
+            >←</button
+          >
+          <span class="text-surface-highest select-none">|</span>
+          <button
+            id="next-legacy"
+            class="text-on-surface hover:text-primary cursor-pointer text-sm font-bold transition-colors duration-300"
+            >→</button
+          >
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const carousel = document.getElementById("legacy-carousel");
+  const prevBtn = document.getElementById("prev-legacy");
+  const nextBtn = document.getElementById("next-legacy");
+
+  if (carousel && prevBtn && nextBtn) {
+    const scrollAmount = 320; // Lebar estimasi satu kartu + gap
+    let autoPlayTimer: any;
+
+    // Fungsi Geser Manual tombol Arrow
+    nextBtn.addEventListener("click", () => {
+      resetAutoPlay();
+      if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+        carousel.scrollTo({ left: 0, behavior: "smooth" }); // Loop balik ke awal
+      } else {
+        carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      resetAutoPlay();
+      if (carousel.scrollLeft <= 0) {
+        carousel.scrollTo({ left: carousel.scrollWidth, behavior: "smooth" }); // Loop ke paling akhir
+      } else {
+        carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      }
+    });
+
+    // LOGIKA AUTO PLAY 3 DETIK
+    const startAutoPlay = () => {
+      autoPlayTimer = setInterval(() => {
+        if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+          carousel.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        }
+      }, 3000); // 3000ms = 3 Detik
+    };
+
+    const resetAutoPlay = () => {
+      clearInterval(autoPlayTimer);
+      startAutoPlay();
+    };
+
+    // Jalankan Autoplay di awal
+    startAutoPlay();
+
+    // Pause autoplay kalau user sengaja hover/nahan pake mouse di PC
+    carousel.addEventListener("mouseenter", () => clearInterval(autoPlayTimer));
+    carousel.addEventListener("mouseleave", startAutoPlay);
+    // Pause kalau di-touch/swipe manual di mobile
+    carousel.addEventListener("touchstart", () => clearInterval(autoPlayTimer), { passive: true });
+    carousel.addEventListener("touchend", startAutoPlay, { passive: true });
+  }
+</script>
+
+<style>
+  /* Menghilangkan scrollbar bawaan browser biar UI tetap sleek dan brutalist */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

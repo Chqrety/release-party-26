@@ -14,31 +14,43 @@ const { time, title, description, index } = Astro.props;
 const isLeft = index % 2 === 0;
 ---
 
-<div class="group relative mb-12 flex w-full cursor-pointer flex-col md:mb-20">
+<div
+  class={cn(
+    "timeline-item group relative mb-12 flex w-full cursor-pointer flex-col md:mb-20",
+    "data-[in-view=true]:scale-[1.01] transition-transform duration-500"
+  )}
+  data-in-view="false"
+>
+  {/* BULLET POINT DI GARIS TIMELINE */}
   <div
     class={cn(
       "absolute top-1 z-10 h-4 w-4 transition-all duration-500 rounded-none",
-      "bg-surface-highest group-hover:bg-primary group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(0,253,126,0.6)]",
-      // MATEMATIKA POSISI YANG BENAR:
-      // Karena garis di left-6, titik juga di left-6 lalu ditarik mundur setengah lebarnya (-translate-x-1/2)
+      "bg-surface-highest",
+
+      // DESKTOP HOVER STATE
+      "md:group-hover:bg-primary md:group-hover:scale-125 md:group-hover:shadow-[0_0_20px_rgba(0,253,126,0.6)]",
+
+      // MOBILE ACTIVE STATE (Via Observer)
+      "max-md:group-data-[in-view=true]:bg-primary max-md:group-data-[in-view=true]:scale-125 max-md:group-data-[in-view=true]:shadow-[0_0_20px_rgba(0,253,126,0.6)]",
+
       "left-6 -translate-x-1/2 md:left-1/2"
     )}
   >
   </div>
 
+  {/* KONTEN AGENDA */}
   <div
     class={cn(
-      // Base Style: Tumpuk vertikal, lebar penuh (HP), padding kiri disesuaikan dengan posisi garis
       "flex flex-col w-full pl-16 sm:pl-20 md:w-1/2",
-
-      // LOGIC LAYOUT DESKTOP
-      isLeft
-        ? "md:items-end md:pl-0 md:pr-16 md:text-right" // Jika Genap (Kiri): Rata kanan, hapus padding kiri, tambah padding kanan
-        : "items-start md:ml-auto md:text-left" // Jika Ganjil (Kanan): Teks rata kiri, dorong ke sisi kanan layat
+      isLeft ? "md:items-end md:pl-0 md:pr-16 md:text-right" : "items-start md:ml-auto md:text-left"
     )}
   >
     <p
-      class="font-display text-on-surface-variant group-hover:text-primary mb-2 text-xs font-bold tracking-widest transition-colors duration-500 md:text-sm"
+      class={cn(
+        "font-display text-on-surface-variant mb-2 text-xs font-bold tracking-widest transition-colors duration-500 md:text-sm",
+        "md:group-hover:text-primary",
+        "max-md:group-data-[in-view=true]:text-primary"
+      )}
     >
       {time}
     </p>
@@ -46,13 +58,48 @@ const isLeft = index % 2 === 0;
     <h3
       class="font-display text-on-surface mb-3 text-xl font-bold uppercase transition-colors duration-500 md:text-2xl lg:text-3xl"
     >
-      <span class="group-hover:text-on-surface transition-colors duration-300">{title}</span>
+      <span
+        class="md:group-hover:text-on-surface max-md:group-data-[in-view=true]:text-primary transition-colors duration-300"
+      >
+        {title}
+      </span>
     </h3>
 
     <p
-      class="font-body text-on-surface-variant group-hover:text-on-surface-variant/80 text-sm leading-relaxed transition-colors duration-500 md:max-w-md md:text-base"
+      class={cn(
+        "font-body text-on-surface-variant text-sm leading-relaxed transition-colors duration-500 md:max-w-md md:text-base",
+        "md:group-hover:text-on-surface-variant/80",
+        "max-md:group-data-[in-view=true]:text-on-surface"
+      )}
     >
       {description}
     </p>
   </div>
 </div>
+
+<script>
+  // Membuat deteksi fokus tepat di area 1/3 atas layar perangkat mobile
+  const observerOptions = {
+    rootMargin: "-30% 0px -55% 0px",
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // RESET: Matikan status aktif seluruh item terlebih dahulu agar hanya MAX 1 yang menyala
+        document.querySelectorAll(".timeline-item").forEach((item) => {
+          item.setAttribute("data-in-view", "false");
+        });
+
+        // ACTIVATE: Nyalakan hanya item yang sedang menyentuh target area view
+        entry.target.setAttribute("data-in-view", "true");
+      }
+    });
+  }, observerOptions);
+
+  // Daftarkan semua elemen agenda ke dalam radar observer
+  document.querySelectorAll(".timeline-item").forEach((item) => {
+    observer.observe(item);
+  });
+</script>

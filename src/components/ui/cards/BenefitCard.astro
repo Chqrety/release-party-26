@@ -24,11 +24,14 @@ const {
 // Dictionary Warna (Persis seperti racikan kita sebelumnya)
 const styles = {
   wrapper: isHighlight
-    ? "shadow-glow bg-[#A6FFB6]"
+    ? "shadow-glow bg-[#A6FFB6] border-t-[#004d22]"
     : "bg-surface-container hover:bg-surface-high hover:border-t-primary",
   icon: isHighlight ? "text-[#004d22]" : "text-primary",
   title: isHighlight ? "text-[#004d22]" : "text-on-surface",
   desc: isHighlight ? "text-[#004d22]/80" : "text-on-surface-variant",
+  button: isHighlight
+    ? "bg-[#004d22] text-[#A6FFB6] hover:bg-[#003316]"
+    : "bg-primary text-[#00652e] hover:bg-primary-container",
 };
 ---
 

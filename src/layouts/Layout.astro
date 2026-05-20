@@ -1,21 +1,15 @@
 ---
 // Import global CSS yang berisi @theme Tailwind v4
 import "../styles/global.css";
+import SEO from "../components/SEO.astro";
 
-interface Props {
-  title: string;
-  description?: string;
-}
-
-// Default description jika tidak diisi saat memanggil Layout
-const { title, description = "Release Party 26 - Inovasi Terbuka untuk Masa Depan oleh Doscom." } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="id" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -28,9 +22,9 @@ const { title, description = "Release Party 26 - Inovasi Terbuka untuk Masa Depa
       rel="stylesheet"
     />
 
-    <title>{title}</title>
+    <SEO title={title} description={description} />
   </head>
-  <body class="antialiased min-h-screen selection:bg-primary selection:text-black">
+  <body class="selection:bg-primary min-h-screen antialiased selection:text-black">
     <slot />
   </body>
 </html>

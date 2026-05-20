@@ -5,7 +5,7 @@
    ========================================= */
 export const aboutTexts = {
   firstParagraph:
-    "Release Party 26 adalah puncak perayaan inovasi tahunan oleh DOSCOM (Dian Nuswantoro Computer Community). Kami menghadirkan seminar nasional yang merayakan kolaborasi dalam ekosistem Open Source.",
+    "Release Party 2026 adalah puncak perayaan inovasi tahunan oleh DOSCOM (Dinus Open Source Community). Kami menghadirkan seminar nasional yang merayakan kolaborasi dalam ekosistem Open Source.",
   secondParagraph:
     "Lebih dari sekadar seminar, ini adalah wadah bagi para antusias teknologi untuk meracik ide, berbagi wawasan, dan membangun masa depan teknologi yang lebih inklusif dan terbuka bagi semua.",
   creditParagraph: "Powered by the vision of TeaLinux OS.",
@@ -17,27 +17,27 @@ export const aboutTexts = {
 export const agendaData = [
   {
     time: "08:00 AM",
-    title: "OPENING CEREMONY",
+    title: "OPENING CEREMONY & EXPO PROJECT",
     description:
-      "A pixelated start to a day of open-source mastery. Keynote by TeaLinux leads.",
+      "Registrasi peserta dilanjutkan dengan pembukaan resmi Release Party 2026 serta eksibisi interaktif untuk mencoba langsung rangkaian proyek internal DOSCOM.",
   },
   {
-    time: "10:30 AM",
-    title: "CORE DISCUSSIONS",
+    time: "09:45 AM",
+    title: "PRODUCT REVEAL & SHOWCASE",
     description:
-      "Deep dive into kernel optimizations and next-gen desktop environments.",
+      "Peluncuran resmi versi terbaru TeaLinuxOS oleh Product Manager DOSCOM beserta bedah arsitektur teknis dan fitur cerdas hasil racikan satu periode.",
   },
   {
-    time: "02:00 PM",
-    title: "THE UNVEILING",
+    time: "10:00 AM",
+    title: "KEYNOTE SESSION & TALK SHOW",
     description:
-      "Exclusive reveal of the newest TeaLinux OS features and ecosystem roadmap.",
+      "Seminar mendalam mengenai optimasi NLP dan LLM bersama praktisi ahli, dilanjutkan dengan sesi Q&A serta talk show interaktif bersama panelis.",
   },
   {
-    time: "04:00 PM",
-    title: "CLOSING & NETWORKING",
+    time: "12:00 PM",
+    title: "CLOSING & PHOTO SESSION",
     description:
-      "Wrap up the day with community networking and exclusive swag distribution.",
+      "Penutupan seluruh rangkaian acara, penyerahan plakat penghargaan, pembagian merchandise eksklusif, dan sesi foto bersama komunitas.",
   },
 ];
 
@@ -46,19 +46,19 @@ export const agendaData = [
    ========================================= */
 export const speakersData = [
   {
-    name: "MBG = My Bini Grace",
-    role: "ANALIS TEKNIS FBI (FEDERASI BINI INDONESIA)",
+    name: "Hanif Yuli Abdillah P.",
+    role: "AI Software Engineer - Inspektorat Daerah Kab.Blora",
     description:
-      "Analis FBI yang jago tracking chat suami. Saking sangarnya, malware pun sungkem dan mending uninstall sendiri pas dia lewat.",
-    image: "/assets/images/speaker-1.webp",
+      "Spesialis dalam rekayasa sistem cerdas berbasis Open Source AI. Berfokus penuh pada optimasi model NLP dan infrastruktur LLM untuk efisiensi performa tingkat tinggi.",
+    image: "/assets/images/hanif.webp",
     imagePosition: "left" as const,
   },
   {
-    name: "Leon S. Kennedy",
-    role: "ZOMBIE HUNTER (APOCALYPSE FOR ZOMBIES)",
+    name: "Harry LBI",
+    role: "Project Manajer Doscom",
     description:
-      "Bukan kiamat zombi, tapi kiamat buat para zombi. Spesialis tendangan maut yang lebih mentingin poni lempar daripada sisa amunisi.",
-    image: "/assets/images/speaker-2.webp",
+      "Project Manager & DevOps Engineer DOSCOM. Berperan vital dalam mengelola siklus pengembangan, otomatisasi infrastruktur, dan peluncuran ekosistem terbaru TeaLinuxOS.",
+    image: "/assets/images/hary.webp",
     imagePosition: "right" as const,
   },
 ];
@@ -134,21 +134,26 @@ export const faqData = [
   {
     question: "APA ITU TEA LINUX OS RELEASE PARTY?",
     answer:
-      "Release Party adalah acara perayaan rilis versi terbaru TeaLinux OS. Di sini kita bahas fitur baru, workshop, dan networking sesama pegiat open source.",
+      "Release Party adalah agenda tahunan terbesar DOSCOM untuk merayakan peluncuran versi terbaru TeaLinuxOS. Tahun ini, acara dikemas bersama Seminar Nasional bertema 'Optimizing Open Source AI for Intelligent Systems' dan Expo Project hasil kembangan satu periode internal.",
   },
   {
     question: "KAPAN DAN DI MANA ACARA INI DILAKSANAKAN?",
     answer:
-      "Cek bagian 'Agenda' di atas untuk detail waktu dan lokasi presisi.",
+      "Acara akan diselenggarakan pada hari Sabtu, 20 Juni 2026 mulai pukul 08:00 WIB. Lokasi utama bertempat di Aula Gedung E.3, Universitas Dian Nuswantoro (UDINUS), Semarang.",
   },
   {
-    question: "APAKAH ACARA INI GRATIS?",
+    question: "BAGAIMANA CARA MEMBELI TIKETNYA?",
     answer:
-      "Tergantung jenis tiket yang kamu pilih. Cek section 'Tickets' untuk info harga Early Bird, Normal, dan Bundling.",
+      "Kamu bisa langsung memilih paket tiket di section 'Tickets' di atas. Tersedia Tiket Khusus Mahasiswa UDINUS (Rp35.000), Tiket Umum (Rp40.000), dan Paket Bundling 3 Orang (Rp100.000) yang bisa kamu amankan slotnya melalui platform D-Form resmi kami.",
   },
   {
-    question: "SIAPA SAJA YANG BISA IKUT?",
+    question: "APAKAH SAYA HARUS PAHAM LINUX ATAU AI UNTUK IKUT?",
     answer:
-      "Siapa saja! Mulai dari pemula Linux, mahasiswa, developer profesional, hingga komunitas umum.",
+      "Tidak perlu! Acara ini terbuka untuk siapa saja—mulai dari pemula yang baru ingin belajar Linux, mahasiswa umum, hingga developer profesional yang tertarik mendalami sisi engineering dari implementasi NLP dan LLM.",
+  },
+  {
+    question: "APA SAJA FASILITAS YANG DIDAPATKAN PESERTA?",
+    answer:
+      "Setiap peserta akan mendapatkan akses penuh ke sesi Seminar & Expo Project, Sertifikat Digital Resmi, Standard Seminar Kit, stiker eksklusif TeaLinuxOS, serta snack & coffee break selama acara berlangsung.",
   },
 ];

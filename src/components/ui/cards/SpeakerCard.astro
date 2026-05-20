@@ -17,16 +17,16 @@ const isLeft = imagePosition === "left";
 
 <BaseCard
   class={cn(
-    "speaker-card flex w-full max-w-5xl mx-auto flex-col transition-all duration-700",
-    "border-transparent", // Default tanpa border
+    "speaker-card group flex w-full max-w-5xl mx-auto flex-col transition-all duration-700",
+    "border-transparent bg-surface-container", // Default state (abu-abu/netral)
 
-    // BORDER HANYA DI DESKTOP (md:)
     isLeft
       ? "md:flex-row md:border-l-4 md:hover:border-primary"
       : "md:flex-row-reverse md:border-l-0 md:border-r-4 md:hover:border-primary",
 
-    // Class trigger dari JS nanti:
-    "data-[in-view=true]:shadow-glow data-[in-view=true]:bg-surface-high"
+    "max-md:data-[in-view=true]:shadow-glow max-md:data-[in-view=true]:bg-surface-high",
+
+    "md:hover:shadow-glow md:hover:bg-surface-high"
   )}
 >
   <div class="relative aspect-square w-full shrink-0 overflow-hidden md:w-5/12 md:max-w-100">
@@ -38,8 +38,10 @@ const isLeft = imagePosition === "left";
       format="webp"
       class={cn(
         "absolute inset-0 h-full w-full object-cover object-center grayscale transition-all duration-700 ease-out",
-        "group-hover:scale-105 group-hover:grayscale-0",
-        "group-data-[in-view=true]:grayscale-0 group-data-[in-view=true]:scale-105"
+
+        "max-md:group-data-[in-view=true]:grayscale-0 max-md:group-data-[in-view=true]:scale-105",
+
+        "md:group-hover:scale-105 md:group-hover:grayscale-0"
       )}
       loading="lazy"
       decoding="async"
@@ -69,9 +71,8 @@ const isLeft = imagePosition === "left";
 </BaseCard>
 
 <script>
-  // SCRIPT OBSERVER: Menembak class saat kartu masuk viewport
   const observerOptions = {
-    threshold: 0.6, // Card harus 60% terlihat baru nyala warnanya
+    threshold: 0.6,
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -79,13 +80,11 @@ const isLeft = imagePosition === "left";
       if (entry.isIntersecting) {
         entry.target.setAttribute("data-in-view", "true");
       } else {
-        // Optional: kembalikan ke grayscale kalau sudah lewat/scroll menjauh
         entry.target.setAttribute("data-in-view", "false");
       }
     });
   }, observerOptions);
 
-  // Jalankan observer ke semua kartu speaker
   document.querySelectorAll(".speaker-card").forEach((card) => {
     observer.observe(card);
   });
